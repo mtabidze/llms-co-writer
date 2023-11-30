@@ -1,0 +1,33 @@
+# Copyright (c) 2023 Mikheil Tabidze
+name: Testing-Flow
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  testing-flow:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'poetry'
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Run all tests
+        run: poetry run ./bin/run_all_tests.sh
