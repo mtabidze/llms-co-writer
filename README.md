@@ -2,6 +2,11 @@
 
 ---
 
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/mtabidze/llms-co-writer.svg?branch=main)](https://github.com/mtabidze/llms-co-writer/commits/main)
+[![Testing Workflow Status](https://github.com/mtabidze/llms-co-writer/actions/workflows/testing-flow.yml/badge.svg?branch=main)](https://github.com/mtabidze/llm-co-writer/actions/workflows/testing-flow.yml)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mtabidze/llms-co-writer.svg)](https://github.com/mtabidze/llms-co-writer/pulls)
+[![GitHub Release](https://img.shields.io/github/release/mtabidze/llms-co-writer.svg)](https://github.com/mtabidze/llms-co-writer/releases)
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=flat&logo=swagger&logoColor=white)
