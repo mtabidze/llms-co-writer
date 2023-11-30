@@ -1,0 +1,8 @@
+[flake8]
+copyright-check = True
+max-line-length = 88
+max-doc-length = 72
+statistics = True
+max-complexity = 16
+ignore = W503, B008, B907
+extend-select = B901, B902, B903, B904, B906, B907, B950
