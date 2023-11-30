@@ -44,6 +44,42 @@ The LLMs Co-Writer API is a powerful RESTful service that leverages the prowess 
 - Docker compatibility for easy deployment and scalability.
 - Integrated GitHub Actions for automated testing and CI.
 
+---
+
+## Usage
+
+### Making a Request
+
+Here's an example demonstrating how to submit a request using the OpenAI models endpoint:
+```shell
+curl -X 'POST' \
+  'http://localhost:8000/v1/openai/chat/completions' \
+  -H 'accept: application/json' \
+  -H 'secret-key: abc123...' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "chat_messages": [
+    {
+      "content": "You are a laconic assistant for tasks related to text completion, co-writing, and various creative assignments.",
+      "role": "system"
+    },
+    {
+      "content": "She do not like the cold weather in winter.",
+      "role": "user"
+    }
+  ]
+}'
+```
+
+### Response
+
+Here's an example illustrating an API response from the OpenAI models endpoint:
+```json
+{
+  "message": "She dislikes the frigid temperatures of winter."
+}
+```
+
 
 ---
 
