@@ -45,6 +45,19 @@ def create_app(settings: Settings = None) -> FastAPI:
 
     if settings.local_model_path:
         try:
+            bling_client = BlingClient(model_path=settings.local_model_path)
+            app.state.bling_client = bling_client
+            logger.info("BLING client initialized.")
+            bling_client.client_test()
+        except BlingClientError:
+            app.state.bling_client = None
+            logger.warning("BLING client initialise failed.")
+    else:
+        app.state.bling_client = None
+        logger.warning("BLING client configuration is missing.")
+
+    if settings.local_model_path:
+        try:
             openai_client = OpenaiClient(
                 api_key=settings.openai_api_key, model_name=settings.openai_model
             )
@@ -56,19 +69,8 @@ def create_app(settings: Settings = None) -> FastAPI:
             app.state.openai_client = None
             logger.warning("OpenAI client initialise failed.")
     else:
+        app.state.openai_client = None
         logger.warning("OpenAI client configuration is missing.")
-
-    if settings.local_model_path:
-        try:
-            bling_client = BlingClient(model_path=settings.local_model_path)
-            app.state.bling_client = bling_client
-            logger.info("BLING client initialized.")
-            bling_client.client_test()
-        except BlingClientError:
-            app.state.bling_client = None
-            logger.warning("BLING client initialise failed.")
-    else:
-        logger.warning("BLING client configuration is missing.")
 
     if settings.redis_dsn is not None:
         try:
@@ -86,6 +88,7 @@ def create_app(settings: Settings = None) -> FastAPI:
             app.state.redis_client = None
             logger.warning("Redis client initialise failed.")
     else:
+        app.state.redis_client = None
         logger.warning("Redis configuration is missing.")
 
     if (
@@ -107,6 +110,7 @@ def create_app(settings: Settings = None) -> FastAPI:
             app.state.dynamodb_client = None
             logger.warning("DynamoDB client initialise failed.")
     else:
+        app.state.dynamodb_client = None
         logger.warning("DynamoDB configuration is missing.")
 
     auth_service = AuthService(secret_keys=settings.secret_keys)

@@ -5,9 +5,16 @@ import pytest
 from starlette.testclient import TestClient
 
 from app.configs.app_config import Settings
-from app.dependencies import get_openai_client
+from app.dependencies import get_bling_client, get_openai_client
 from app.main import create_app
 from tests import test_configs
+
+
+def mock_bling_client():
+    response = "bling content"
+    bling_client = Mock()
+    bling_client.generate_response = Mock(return_value=response)
+    return bling_client
 
 
 def mock_get_openai_client():
@@ -28,6 +35,7 @@ def test_client(request) -> TestClient:
         param_value = test_configs.default
     settings = Settings.model_validate(param_value)
     app = create_app(settings=settings)
+    app.dependency_overrides[get_bling_client] = mock_bling_client
     app.dependency_overrides[get_openai_client] = mock_get_openai_client
     test_client = TestClient(app)
     return test_client

@@ -8,10 +8,10 @@ from app.controllers.health_checks_controller import (
     get_liveness_status,
     get_readiness_status,
 )
-from app.dependencies import get_openai_client, get_redis_client
+from app.dependencies import get_bling_client, get_openai_client
 from app.models.health_checks_models import HeathCheck, HeathCheckStatus
+from app.services.bling_client import BlingClient
 from app.services.openai_client import OpenaiClient
-from app.services.redis_client import RedisClient
 
 logger = logging.getLogger().getChild(__name__)
 
@@ -38,11 +38,11 @@ health_check_router = APIRouter(
 async def health_check(
     request: Request,
     response: Response,
+    bling_client: BlingClient = Depends(get_bling_client),
     openai_client: OpenaiClient = Depends(get_openai_client),
-    redis_client: RedisClient = Depends(get_redis_client),
 ):
     if get_health_status(
-        request=request, openai_client=openai_client, redis_client=redis_client
+        request=request, bling_client=bling_client, openai_client=openai_client
     ):
         response.status_code = status.HTTP_200_OK
         return HeathCheck(status=HeathCheckStatus.HEALTHY)
@@ -60,11 +60,11 @@ async def health_check(
 async def liveness_check(
     request: Request,
     response: Response,
+    bling_client: BlingClient = Depends(get_bling_client),
     openai_client: OpenaiClient = Depends(get_openai_client),
-    redis_client: RedisClient = Depends(get_redis_client),
 ):
     if get_liveness_status(
-        request=request, openai_client=openai_client, redis_client=redis_client
+        request=request, bling_client=bling_client, openai_client=openai_client
     ):
         response.status_code = status.HTTP_200_OK
         return HeathCheck(status=HeathCheckStatus.HEALTHY)
@@ -84,11 +84,11 @@ async def liveness_check(
 async def readiness_check(
     request: Request,
     response: Response,
+    bling_client: BlingClient = Depends(get_bling_client),
     openai_client: OpenaiClient = Depends(get_openai_client),
-    redis_client: RedisClient = Depends(get_redis_client),
 ):
     if get_readiness_status(
-        request=request, openai_client=openai_client, redis_client=redis_client
+        request=request, bling_client=bling_client, openai_client=openai_client
     ):
         response.status_code = status.HTTP_200_OK
         return HeathCheck(status=HeathCheckStatus.HEALTHY)

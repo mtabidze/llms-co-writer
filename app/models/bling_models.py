@@ -17,10 +17,10 @@ class BlingPromptCreate(BaseModel):
     )
 
 
-class ChatCompletionOut(BaseModel):
+class BlingResponseOut(BaseModel):
     response: str = Field(
         default=...,
         title="response",
-        description="The contents of the completion message",
-        examples=["Hello"],
+        description="The content of the model output",
+        examples=["99 years old"],
     )

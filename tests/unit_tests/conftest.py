@@ -5,6 +5,18 @@ import pytest
 
 
 @pytest.fixture(scope="function")
+def mock_bling_client(request):
+    if hasattr(request, "param"):
+        param_value = request.param
+    else:
+        param_value = None
+    response = param_value
+    bling_client = Mock()
+    bling_client.generate_response = Mock(return_value=response)
+    return bling_client
+
+
+@pytest.fixture(scope="function")
 def mock_openai_client(request):
     if hasattr(request, "param"):
         param_value = request.param
