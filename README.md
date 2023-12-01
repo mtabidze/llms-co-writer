@@ -47,9 +47,31 @@ The LLMs Co-Writer API is a powerful RESTful service that leverages the prowess 
 ---
 
 ## Usage
+### BLING
+Here's an example demonstrating how to submit a request using the BLING models endpoint:
+```shell
+curl -X 'POST' \
+  'http://localhost:8000/v1/bling/responses' \
+  -H 'accept: application/json' \
+  -H 'secret-key: abc123...' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "context": "A. The cat quickly climbed the tall tree. \n B. She have not seen that movie yet. \n C. They are going to the beach this weekend.",
+  "query": "Can you identify any grammar mistakes in the provided context?"
+}'
+```
 
-### Making a Request
+#### Response
 
+Here's an example illustrating an API response from the BLING models endpoint:
+```json
+{
+  "response": " B. She hasn't seen that movie yet."
+}
+```
+
+### OpenAI
+#### Making a Request
 Here's an example demonstrating how to submit a request using the OpenAI models endpoint:
 ```shell
 curl -X 'POST' \
@@ -71,7 +93,7 @@ curl -X 'POST' \
 }'
 ```
 
-### Response
+#### Response
 
 Here's an example illustrating an API response from the OpenAI models endpoint:
 ```json
