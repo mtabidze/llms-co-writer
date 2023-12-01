@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     secret_keys: list[str] = []
     openai_api_key: str
     openai_model: str = "gpt-4"
+    local_model_path: str | None = Field(default=None)
     redis_dsn: RedisDsn | None = Field(default=None)
     redis_expiration_seconds: int = Field(default=3600)
     aws_region: str | None = Field(default=None)

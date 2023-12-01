@@ -2,6 +2,7 @@
 from fastapi import Request
 
 from app.services.auth_service import AuthService
+from app.services.bling_client import BlingClient
 from app.services.dynamodb_client import DynamodbClient
 from app.services.openai_client import OpenaiClient
 from app.services.redis_client import RedisClient
@@ -10,6 +11,11 @@ from app.services.redis_client import RedisClient
 def get_auth_service(request: Request) -> AuthService | None:
     auth_service: AuthService = getattr(request.app.state, "auth_service", None)
     return auth_service
+
+
+def get_bling_client(request: Request) -> BlingClient | None:
+    bling_client: BlingClient = getattr(request.app.state, "bling_client", None)
+    return bling_client
 
 
 def get_openai_client(request: Request) -> OpenaiClient | None:
