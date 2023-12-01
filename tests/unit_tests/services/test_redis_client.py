@@ -41,12 +41,14 @@ def test_init_exception(mock_redis):
 
 
 def test_client_test(test_redis_client: RedisClient):
+    test_key = "test key"
+    test_value = "test value"
     cached_value = "test value"
     test_redis_client._client.delete = Mock(return_value=1)
     test_redis_client._client.set = Mock(return_value=True)
     test_redis_client._client.get = Mock(return_value=cached_value)
 
-    test_redis_client.client_test()
+    test_redis_client.client_test(key=test_key, value=test_value)
 
 
 def test_client_test_exception(test_redis_client: RedisClient):
