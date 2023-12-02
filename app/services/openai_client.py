@@ -16,6 +16,16 @@ class OpenaiClient:
             raise OpenaiClientInitialisationError from None
         self.model_name = model_name
 
+    def client_test(self, messages: list[ChatCompletionMessageParam] = None):
+        messages = messages or [{"content": "user content", "role": "user"}]
+        logger.debug(f"Input messages: {messages=}")
+        try:
+            chat_completion = self.generate_chat_completion(messages=messages)
+            logger.debug(f"Output chat completion: {chat_completion}")
+        except Exception as e:
+            logger.error(f"OpenAI client test failed: {e}")
+            raise OpenaiClientTestError from None
+
     def generate_chat_completion(
         self, messages: list[ChatCompletionMessageParam]
     ) -> ChatCompletion:
@@ -31,6 +41,12 @@ class OpenaiClient:
 
 class OpenaiClientError(Exception):
     """Base exception class for the OpenAI client module."""
+
+    pass
+
+
+class OpenaiClientTestError(OpenaiClientError):
+    """Exception raised when OpenAI test fails."""
 
     pass
 

@@ -2,6 +2,11 @@
 
 ---
 
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/mtabidze/llms-co-writer.svg?branch=main)](https://github.com/mtabidze/llms-co-writer/commits/main)
+[![Testing Workflow Status](https://github.com/mtabidze/llms-co-writer/actions/workflows/testing-flow.yml/badge.svg?branch=main)](https://github.com/mtabidze/llm-co-writer/actions/workflows/testing-flow.yml)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mtabidze/llms-co-writer.svg)](https://github.com/mtabidze/llms-co-writer/pulls)
+[![GitHub Release](https://img.shields.io/github/release/mtabidze/llms-co-writer.svg)](https://github.com/mtabidze/llms-co-writer/releases)
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=flat&logo=swagger&logoColor=white)
@@ -38,6 +43,69 @@ The LLMs Co-Writer API is a powerful RESTful service that leverages the prowess 
 - DynamoDB-driven persistence of request and inference data.
 - Docker compatibility for easy deployment and scalability.
 - Integrated GitHub Actions for automated testing and CI.
+
+---
+
+## Architecture Diagram (Draft)
+![Architecture Diagram](docs/ArchitectureDiagram.png?raw=true)
+
+---
+
+## Usage
+### BLING
+Here's an example demonstrating how to submit a request using the BLING models endpoint:
+```shell
+curl -X 'POST' \
+  'http://localhost:8000/v1/bling/responses' \
+  -H 'accept: application/json' \
+  -H 'secret-key: abc123...' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "context": "A. The cat quickly climbed the tall tree. \n B. She have not seen that movie yet. \n C. They are going to the beach this weekend.",
+  "query": "Can you identify any grammar mistakes in the provided context?"
+}'
+```
+
+#### Response
+
+Here's an example illustrating an API response from the BLING models endpoint:
+```json
+{
+  "response": " B. She have not seen that movie yet."
+}
+```
+
+### OpenAI
+#### Making a Request
+Here's an example demonstrating how to submit a request using the OpenAI models endpoint:
+```shell
+curl -X 'POST' \
+  'http://localhost:8000/v1/openai/chat/completions' \
+  -H 'accept: application/json' \
+  -H 'secret-key: abc123...' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "chat_messages": [
+    {
+      "content": "You are a laconic assistant for tasks related to text completion, co-writing, and various creative assignments.",
+      "role": "system"
+    },
+    {
+      "content": "She do not like the cold weather in winter.",
+      "role": "user"
+    }
+  ]
+}'
+```
+
+#### Response
+
+Here's an example illustrating an API response from the OpenAI models endpoint:
+```json
+{
+  "message": "She dislikes the frigid temperatures of winter."
+}
+```
 
 
 ---

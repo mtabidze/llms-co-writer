@@ -5,6 +5,17 @@ import pytest
 
 
 @pytest.fixture(scope="function")
+def mock_bling_client(request):
+    if hasattr(request, "param"):
+        param_value = request.param
+    else:
+        param_value = None
+    bling_client = Mock()
+    bling_client.generate_response.return_value = param_value
+    return bling_client
+
+
+@pytest.fixture(scope="function")
 def mock_openai_client(request):
     if hasattr(request, "param"):
         param_value = request.param
@@ -15,7 +26,7 @@ def mock_openai_client(request):
     chat_completion = Mock()
     chat_completion.choices = [choice]
     openai_client = Mock()
-    openai_client.generate_chat_completion = Mock(return_value=chat_completion)
+    openai_client.generate_chat_completion.return_value = chat_completion
     return openai_client
 
 
@@ -25,14 +36,20 @@ def mock_redis_client(request):
         param_value = request.param
     else:
         param_value = None
-    mock_redis_client = Mock()
-    mock_redis_client.get_cache_key = Mock(return_value="key")
-    mock_redis_client.get = Mock(return_value=param_value)
-    mock_redis_client.set = Mock(return_value=True)
-    return mock_redis_client
+    redis_client = Mock()
+    redis_client.get_cache_key.return_value = "key"
+    redis_client.set.return_value = True
+    redis_client.get.return_value = param_value
+    return redis_client
+
+
+@pytest.fixture(scope="function")
+def mock_dynamodb_client():
+    dynamodb_client = Mock()
+    return dynamodb_client
 
 
 @pytest.fixture(scope="function")
 def mock_request():
-    mock_request = Mock()
-    return mock_request
+    request = Mock()
+    return request

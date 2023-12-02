@@ -30,20 +30,21 @@ class RedisClient:
             raise RedisClientInitialisationError from None
         self.expiration_seconds = expiration_seconds
 
-    def client_test(self):
-        test_key = "test_key"
-        test_value = "test value"
+    def client_test(self, key: str = None, value: str = None):
+        key = key or "test key"
+        value = value or "test value"
+        logger.debug(f"Input: {key=} {value=}")
         try:
-            self.delete(key=test_key)
-            self.set(key=test_key, value=test_value)
-            cached_value = self.get(key=test_key)
+            self.delete(key=key)
+            self.set(key=key, value=value)
+            cached_value = self.get(key=key)
+            logger.debug(f"Cached value: {cached_value}")
         except Exception as e:
             logger.error(f"Redis client test failed: {e}")
             raise RedisClientTestError from None
-        if cached_value != test_value:
+        if cached_value != value:
             logger.error(
-                f"Redis client test failed. Key: '{test_key}',"
-                f" Value: '{test_value}', Cached Value: '{cached_value}'."
+                f"Redis client test failed: {key=}, {value=}, {cached_value=}."
             )
             raise RedisClientTestError
 
@@ -51,7 +52,7 @@ class RedisClient:
         try:
             return self._client.get(name=key)
         except Exception as e:
-            logger.error(f"Failed to get value for key '{key}' from Redis: {e}")
+            logger.error(f"Failed to get value for {key=} from Redis: {e}")
             raise RedisClientRetrievalError from None
 
     def set(self, key: str, value, expiration_seconds: int = None):
@@ -60,14 +61,14 @@ class RedisClient:
                 name=key, value=value, ex=expiration_seconds or self.expiration_seconds
             )
         except Exception as e:
-            logger.error(f"Failed to set key '{key}' in Redis: {e}")
+            logger.error(f"Failed to set {key=} in Redis: {e}")
             raise RedisClientInsertionError from None
 
     def delete(self, key: str):
         try:
             return self._client.delete(key)
         except Exception as e:
-            logger.error(f"Failed to delete key '{key}' from Redis: {e}")
+            logger.error(f"Failed to delete {key=} from Redis: {e}")
             raise RedisClientDeletionError from None
 
     @staticmethod

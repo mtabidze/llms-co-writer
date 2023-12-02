@@ -6,6 +6,7 @@ WORKDIR /application_root
 
 # Copy project files
 COPY app ./app
+COPY ai_models ./ai_models
 COPY tools/healthcheck.py ./
 COPY pyproject.toml poetry.lock ./
 

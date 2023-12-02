@@ -2,13 +2,15 @@
 from fastapi import status
 from starlette.testclient import TestClient
 
-from tests.functional_tests.ft_constants import CHAT_COMPLETIONS_EP
+from tests.functional_tests.ft_constants import OPEN_AI_CHAT_COMPLETIONS_EP
 
 
 def test_create_chat_completions(test_client: TestClient):
     payload = {"chat_messages": [{"content": "user content", "role": "user"}]}
     response = test_client.post(
-        url=CHAT_COMPLETIONS_EP, json=payload, headers={"secret-key": "test_secret_key"}
+        url=OPEN_AI_CHAT_COMPLETIONS_EP,
+        json=payload,
+        headers={"secret-key": "test_secret_key"},
     )
     assert response.status_code == status.HTTP_201_CREATED
 
@@ -21,5 +23,11 @@ def test_create_chat_completions(test_client: TestClient):
 
 def test_create_chat_completions_unauthorized(test_client: TestClient):
     payload = {"chat_messages": [{"content": "user content", "role": "user"}]}
-    response = test_client.post(url=CHAT_COMPLETIONS_EP, json=payload)
+    response = test_client.post(url=OPEN_AI_CHAT_COMPLETIONS_EP, json=payload)
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    payload = {"chat_messages": [{"content": "user content", "role": "user"}]}
+    response = test_client.post(
+        url=OPEN_AI_CHAT_COMPLETIONS_EP, json=payload, headers={"secret-key": "abc123"}
+    )
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
