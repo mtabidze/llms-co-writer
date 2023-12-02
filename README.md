@@ -46,6 +46,11 @@ The LLMs Co-Writer API is a powerful RESTful service that leverages the prowess 
 
 ---
 
+## Architecture Diagram (Draft)
+![Architecture Diagram](docs/ArchitectureDiagram.png?raw=true)
+
+---
+
 ## Usage
 ### BLING
 Here's an example demonstrating how to submit a request using the BLING models endpoint:
@@ -66,7 +71,7 @@ curl -X 'POST' \
 Here's an example illustrating an API response from the BLING models endpoint:
 ```json
 {
-  "response": " B. She hasn't seen that movie yet."
+  "response": " B. She have not seen that movie yet."
 }
 ```
 
