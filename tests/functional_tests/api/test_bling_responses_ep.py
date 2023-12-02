@@ -23,3 +23,9 @@ def test_create_chat_completions_unauthorized(test_client: TestClient):
     payload = {"context": "human context", "query": "human query"}
     response = test_client.post(url=BLING_RESPONSES_EP, json=payload)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    payload = {"context": "human context", "query": "human query"}
+    response = test_client.post(
+        url=BLING_RESPONSES_EP, json=payload, headers={"secret-key": "abc123"}
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED

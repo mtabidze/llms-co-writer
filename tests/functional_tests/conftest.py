@@ -5,7 +5,12 @@ import pytest
 from starlette.testclient import TestClient
 
 from app.configs.app_config import Settings
-from app.dependencies import get_bling_client, get_openai_client
+from app.dependencies import (
+    get_bling_client,
+    get_dynamodb_client,
+    get_openai_client,
+    get_redis_client,
+)
 from app.main import create_app
 from tests import test_configs
 
@@ -27,6 +32,19 @@ def mock_get_openai_client():
     return openai_client
 
 
+def mock_get_redis_client():
+    redis_client = Mock()
+    redis_client.get_cache_key.return_value = "key"
+    redis_client.set.return_value = True
+    redis_client.get.return_value = None
+    return redis_client
+
+
+def mock_get_dynamodb_client():
+    dynamodb_client = Mock()
+    return dynamodb_client
+
+
 @pytest.fixture(scope="session")
 def test_client(request) -> TestClient:
     if hasattr(request, "param"):
@@ -37,5 +55,7 @@ def test_client(request) -> TestClient:
     app = create_app(settings=settings)
     app.dependency_overrides[get_bling_client] = mock_bling_client
     app.dependency_overrides[get_openai_client] = mock_get_openai_client
+    app.dependency_overrides[get_redis_client] = mock_get_redis_client
+    app.dependency_overrides[get_dynamodb_client] = mock_get_dynamodb_client
     test_client = TestClient(app)
     return test_client

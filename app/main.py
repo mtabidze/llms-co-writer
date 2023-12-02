@@ -56,7 +56,7 @@ def create_app(settings: Settings = None) -> FastAPI:
         app.state.bling_client = None
         logger.warning("BLING client configuration is missing.")
 
-    if settings.local_model_path:
+    if settings.openai_api_key:
         try:
             openai_client = OpenaiClient(
                 api_key=settings.openai_api_key, model_name=settings.openai_model

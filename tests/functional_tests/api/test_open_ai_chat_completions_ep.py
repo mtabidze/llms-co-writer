@@ -25,3 +25,9 @@ def test_create_chat_completions_unauthorized(test_client: TestClient):
     payload = {"chat_messages": [{"content": "user content", "role": "user"}]}
     response = test_client.post(url=OPEN_AI_CHAT_COMPLETIONS_EP, json=payload)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    payload = {"chat_messages": [{"content": "user content", "role": "user"}]}
+    response = test_client.post(
+        url=OPEN_AI_CHAT_COMPLETIONS_EP, json=payload, headers={"secret-key": "abc123"}
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
