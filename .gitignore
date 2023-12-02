@@ -1,6 +1,7 @@
 ###Project files###
 .env
 ai_models/
+
 ### Vscode
 .vscode/
 
