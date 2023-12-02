@@ -2,9 +2,7 @@
 name: Testing-Flow
 on:
   push:
-    branches: [ "main", "dev" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "**" ]
 jobs:
   testing-flow:
     runs-on: ubuntu-latest
