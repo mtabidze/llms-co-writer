@@ -1,6 +1,7 @@
 # Copyright (c) 2023 Mikheil Tabidze
 import logging
 
+import tiktoken
 from openai import OpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionMessageParam
 
@@ -38,6 +39,17 @@ class OpenaiClient:
             raise ChatCompletionGenerationError from None
         return chat_completion
 
+    def tokenize(self, input_text: str, model_name: str | None = None) -> list[int]:
+        model_name = model_name or self.model_name
+        try:
+            encoding = tiktoken.encoding_for_model(model_name=model_name)
+            logger.debug(f"Selected encoding {encoding.name} for model {model_name}")
+            tokens = encoding.encode(text=input_text)
+        except Exception as e:
+            logger.error(f"Error tokenizing text: {e}")
+            raise TokenizationError from None
+        return tokens
+
 
 class OpenaiClientError(Exception):
     """Base exception class for the OpenAI client module."""
@@ -59,5 +71,11 @@ class OpenaiClientInitialisationError(OpenaiClientError):
 
 class ChatCompletionGenerationError(OpenaiClientError):
     """Exception raised when chat completion generation fails."""
+
+    pass
+
+
+class TokenizationError(OpenaiClientError):
+    """Exception raised when tokenization fails."""
 
     pass

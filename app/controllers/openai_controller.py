@@ -55,3 +55,10 @@ def create_chat_completions(
             pass
 
     return content
+
+
+def tokenize_text(tokenize_data: dict, openai_client: OpenaiClient) -> list[int]:
+    input_text = tokenize_data.get("text")
+    model_name = tokenize_data.get("model_name")
+    tokens = openai_client.tokenize(input_text=input_text, model_name=model_name)
+    return tokens

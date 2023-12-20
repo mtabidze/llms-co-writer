@@ -20,6 +20,7 @@ redis = "^5.0.1"
 boto3 = "^1.33.6"
 torch = "^2.1.1"
 transformers = "^4.35.2"
+tiktoken = "^0.5.2"
 
 
 [tool.poetry.group.dev.dependencies]

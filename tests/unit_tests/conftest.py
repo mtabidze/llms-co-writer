@@ -27,6 +27,7 @@ def mock_openai_client(request):
     chat_completion.choices = [choice]
     openai_client = Mock()
     openai_client.generate_chat_completion.return_value = chat_completion
+    openai_client.tokenize.return_value = [2323, 1495]
     return openai_client
 
 
