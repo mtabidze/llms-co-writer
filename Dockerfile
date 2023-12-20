@@ -11,7 +11,7 @@ COPY tools/healthcheck.py ./
 COPY pyproject.toml poetry.lock ./
 
 # Install the application dependencies
-RUN pip install poetry && export POETRY_VIRTUALENVS_CREATE=false && poetry install --no-root --no-dev
+RUN pip install poetry && export POETRY_VIRTUALENVS_CREATE=false && poetry install --no-root --without dev
 
 # Expose the application port
 EXPOSE 8080/tcp

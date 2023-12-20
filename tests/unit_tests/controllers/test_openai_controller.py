@@ -65,3 +65,17 @@ def test_create_cache_miss(mock_openai_client, mock_redis_client, mock_dynamodb_
     assert (
         result == "openai content"
     ), f"Expected result from OpenAI client, but got: {result}"
+
+
+def test_tokenize(mock_openai_client):
+    tokenize_data = {"text": "Test text", "model_name": "gpt-4"}
+    expected_tokens = [2323, 1495]
+
+    result = openai_controller.tokenize_text(
+        tokenize_data=tokenize_data, openai_client=mock_openai_client
+    )
+
+    mock_openai_client.tokenize.assert_called_once()
+    assert (
+        result == expected_tokens
+    ), f"Expected result from OpenAI client, but got: {result}"

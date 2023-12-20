@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright (c) 2023 Mikheil Tabidze
-# This script performs unit testing using pytest.
+# This script performs unit testing using PyTest.
 
 echo -e "\nUnit testing has begun\n"
 

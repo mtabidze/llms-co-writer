@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright (c) 2023 Mikheil Tabidze
-# This script performs functional testing using pytest.
+# This script performs functional testing using PyTest.
 
 echo -e "\nFunctional testing has begun\n"
 

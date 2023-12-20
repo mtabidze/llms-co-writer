@@ -11,33 +11,34 @@ packages = [{include = "llms_co_writer"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pip = "^23.3.1"
+pip = "^23.3.2"
 fastapi = "^0.104.1"
 pydantic-settings = "^2.1.0"
 uvicorn = {extras = ["standard"], version = "^0.24.0"}
-openai = "^1.3.7"
+openai = "^1.6.0"
 redis = "^5.0.1"
-boto3 = "^1.33.6"
-torch = "^2.1.1"
-transformers = "^4.35.2"
+boto3 = "^1.34.4"
+torch = "^2.1.2"
+transformers = "^4.36.2"
+tiktoken = "^0.5.2"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
 pytest-random-order = "^1.1.0"
 pytest-asyncio = "^0.20.3"
-coverage = "^7.3.2"
+coverage = "^7.3.3"
 mock = "^5.1.0"
-bandit = "^1.7.5"
-pip-audit = "^2.6.1"
+bandit = "^1.7.6"
+pip-audit = "^2.6.2"
 pip-licenses = "^4.3.3"
 flake8 = "^6.1.0"
-flake8-bugbear = "^23.11.28"
+flake8-bugbear = "^23.12.2"
 flake8-copyright = "^0.2.4"
 pylama = "^8.4.1"
 ruff = "^0.0.290"
-black = "^23.11.0"
-isort = "^5.12.0"
+black = "^23.12.0"
+isort = "^5.13.2"
 
 
 [tool.isort]

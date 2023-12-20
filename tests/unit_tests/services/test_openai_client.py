@@ -8,6 +8,7 @@ from app.services.openai_client import (
     ChatCompletionGenerationError,
     OpenaiClient,
     OpenaiClientInitialisationError,
+    TokenizationError,
 )
 
 
@@ -62,3 +63,29 @@ def test_generate_chat_completion_exception(mock_openai):
 
     with pytest.raises(ChatCompletionGenerationError):
         test_openai_client.generate_chat_completion(messages=test_chat_messages)
+
+
+def test_tokenize():
+    test_input_text = "Test text"
+    test_model_name = "gpt-4"
+    expected_tokens = [2323, 1495]
+    test_openai_client = OpenaiClient(api_key="test_openai_api_key", model_name="gpt-4")
+
+    result = test_openai_client.tokenize(
+        input_text=test_input_text, model_name=test_model_name
+    )
+
+    assert (
+        result == expected_tokens
+    ), f"Expected result to be '{expected_tokens}', but got: {result}"
+
+
+def test_tokenize_exception():
+    test_input_text = "Test text"
+    test_model_name = "unknown model"
+    test_openai_client = OpenaiClient(api_key="test_openai_api_key", model_name="gpt-4")
+
+    with pytest.raises(TokenizationError):
+        test_openai_client.tokenize(
+            input_text=test_input_text, model_name=test_model_name
+        )
