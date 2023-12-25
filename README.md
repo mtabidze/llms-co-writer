@@ -91,6 +91,10 @@ curl -X 'POST' \
       "role": "system"
     },
     {
+      "content": "Correct grammatical mistakes",
+      "role": "user"
+    },
+    {
       "content": "She do not like the cold weather in winter.",
       "role": "user"
     }

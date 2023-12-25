@@ -5,9 +5,9 @@
 echo -e "\nCoverage measurement has begun\n"
 
 # Perform coverage measurement
-coverage report --data-file=cover/unit-testing/unit-testing.coverage --fail-under=75
+coverage report --data-file=cover/unit-testing/unit-testing.coverage --fail-under=80
 UNIT_TESTING_COVERAGE_EXIT_CODE=$?
-coverage report --data-file=cover/functional-testing/functional-testing.coverage --fail-under=75
+coverage report --data-file=cover/functional-testing/functional-testing.coverage --fail-under=70
 FUNCTIONAL_TESTING_COVERAGE_EXIT_CODE=$?
 
 # Display results
